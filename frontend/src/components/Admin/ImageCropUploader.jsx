@@ -1,3 +1,4 @@
+import "react-image-crop/dist/ReactCrop.css";
 import { useState, useRef, useCallback } from "react";
 import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 

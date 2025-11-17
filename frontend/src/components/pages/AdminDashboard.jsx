@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion ,AnimatePresence } from 'framer-motion';
 import Sidebar from "../Admin/Sidebar";
 import ProjectsTable from "../Admin/ProjectsTable";
 import ClientsTable from "../Admin/ClientsTable";
@@ -26,34 +27,28 @@ const AdminDashboard = () => {
   const [clients, setClients] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [subscribers, setSubscribers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [editingProject, setEditingProject] = useState(null);
   const [editingClient, setEditingClient] = useState(null);
 
   const loadData = async () => {
+    setLoading(true);
     try {
-      const proj = await fetchAdminProjects();
+      const [proj, cls, cts, subs] = await Promise.all([
+        fetchAdminProjects().catch(() => []),
+        fetchAdminClients().catch(() => []),
+        fetchContacts().catch(() => []),
+        fetchSubscribers().catch(() => []),
+      ]);
       setProjects(proj);
-    } catch (e) {
-      console.error(e);
-    }
-    try {
-      const cls = await fetchAdminClients();
       setClients(cls);
-    } catch (e) {
-      console.error(e);
-    }
-    try {
-      const cts = await fetchContacts();
       setContacts(cts);
-    } catch (e) {
-      console.error(e);
-    }
-    try {
-      const subs = await fetchSubscribers();
       setSubscribers(subs);
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -91,66 +86,123 @@ const AdminDashboard = () => {
     }
   };
 
+  const stats = [
+    { label: 'Total Projects', value: projects.length, gradient: 'from-blue-500 to-blue-600' },
+    { label: 'Happy Clients', value: clients.length, gradient: 'from-purple-500 to-purple-600' },
+    { label: 'Contact Entries', value: contacts.length, gradient: 'from-pink-500 to-pink-600' },
+    { label: 'Subscribers', value: subscribers.length, gradient: 'from-indigo-500 to-indigo-600' },
+  ];
+
   return (
     <div className="min-h-screen flex bg-gray-50">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <main className="flex-1 p-4 md:p-6 relative">
-        {activeTab === "projects" && (
-          <>
-            <h1 className="text-2xl font-bold mb-4">Projects</h1>
-            <ProjectForm onCreated={loadData} />
-            <ProjectsTable
-              projects={projects}
-              onEdit={handleEditProject}
-              onDelete={handleDeleteProject}
-            />
-          </>
-        )}
-        {activeTab === "clients" && (
-          <>
-            <h1 className="text-2xl font-bold mb-4">Clients</h1>
-            <ClientForm onCreated={loadData} />
-            <ClientsTable
-              clients={clients}
-              onEdit={handleEditClient}
-              onDelete={handleDeleteClient}
-            />
-          </>
-        )}
-        {activeTab === "contacts" && (
-          <>
-            <h1 className="text-2xl font-bold mb-4">Contact Form Details</h1>
-            <ContactsTable contacts={contacts} />
-          </>
-        )}
-        {activeTab === "subscribers" && (
-          <>
-            <h1 className="text-2xl font-bold mb-4">Subscribers</h1>
-            <SubscribersTable subscribers={subscribers} />
-          </>
-        )}
+      
+      <main className="flex-1 overflow-auto">
+        <div className="p-6 md:p-8 max-w-7xl mx-auto">
+          {/* Header with Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8"
+          >
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              {activeTab === 'projects' && 'Projects Management'}
+              {activeTab === 'clients' && 'Clients Management'}
+              {activeTab === 'contacts' && 'Contact Form Entries'}
+              {activeTab === 'subscribers' && 'Newsletter Subscribers'}
+            </h1>
+            <p className="text-gray-600">
+              Manage and organize your content from one place
+            </p>
 
-        {editingProject && (
-          <ProjectEditModal
-            project={editingProject}
-            onClose={() => setEditingProject(null)}
-            onSaved={() => {
-              setEditingProject(null);
-              loadData();
-            }}
-          />
-        )}
+            {/* Stats Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative overflow-hidden rounded-2xl bg-white shadow-soft p-6"
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-5`}></div>
+                  <div className="relative">
+                    <p className="text-sm font-medium text-gray-600 mb-1">{stat.label}</p>
+                    <p className={`text-3xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
+                      {loading ? '...' : stat.value}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
 
-        {editingClient && (
-          <ClientEditModal
-            client={editingClient}
-            onClose={() => setEditingClient(null)}
-            onSaved={() => {
-              setEditingClient(null);
-              loadData();
-            }}
-          />
-        )}
+          {/* Content Area */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              {activeTab === "projects" && (
+                <div className="space-y-6">
+                  <ProjectForm onCreated={loadData} />
+                  <ProjectsTable
+                    projects={projects}
+                    onEdit={handleEditProject}
+                    onDelete={handleDeleteProject}
+                  />
+                </div>
+              )}
+
+              {activeTab === "clients" && (
+                <div className="space-y-6">
+                  <ClientForm onCreated={loadData} />
+                  <ClientsTable
+                    clients={clients}
+                    onEdit={handleEditClient}
+                    onDelete={handleDeleteClient}
+                  />
+                </div>
+              )}
+
+              {activeTab === "contacts" && (
+                <ContactsTable contacts={contacts} />
+              )}
+
+              {activeTab === "subscribers" && (
+                <SubscribersTable subscribers={subscribers} />
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Modals */}
+        <AnimatePresence>
+          {editingProject && (
+            <ProjectEditModal
+              project={editingProject}
+              onClose={() => setEditingProject(null)}
+              onSaved={() => {
+                setEditingProject(null);
+                loadData();
+              }}
+            />
+          )}
+
+          {editingClient && (
+            <ClientEditModal
+              client={editingClient}
+              onClose={() => setEditingClient(null)}
+              onSaved={() => {
+                setEditingClient(null);
+                loadData();
+              }}
+            />
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );
