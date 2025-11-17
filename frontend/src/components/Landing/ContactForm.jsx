@@ -80,7 +80,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">Email us</p>
-                  <p className="font-semibold text-gray-900">hello@company.com</p>
+                  <p className="font-semibold text-gray-900">soham171203@gmail.com</p>
                 </div>
               </motion.div>
 
@@ -93,7 +93,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">Call us</p>
-                  <p className="font-semibold text-gray-900">+1 (555) 123-4567</p>
+                  <p className="font-semibold text-gray-900">+91 8305384160</p>
                 </div>
               </motion.div>
 
@@ -106,7 +106,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">Visit us</p>
-                  <p className="font-semibold text-gray-900">123 Business St, City</p>
+                  <p className="font-semibold text-gray-900">123 IT Park, Indore</p>
                 </div>
               </motion.div>
             </div>

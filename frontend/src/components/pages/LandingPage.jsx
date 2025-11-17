@@ -72,10 +72,10 @@ const LandingPage = () => {
               whileHover={{ scale: 1.05 }}
             >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-                <span className="text-white font-bold text-xl">C</span>
+                <span className="text-white font-bold text-xl">S</span>
               </div>
               <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Company
+                Showcase-Hub
               </span>
             </motion.a>
 
@@ -164,9 +164,9 @@ const LandingPage = () => {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">C</span>
+                  <span className="text-white font-bold text-xl">S</span>
                 </div>
-                <span className="font-bold text-xl">Company</span>
+                <span className="font-bold text-xl">Showcase-Hub</span>
               </div>
               <p className="text-gray-400 text-sm">
                 Building the future, one project at a time.
@@ -191,9 +191,9 @@ const LandingPage = () => {
             <div>
               <h3 className="font-semibold mb-4">Contact</h3>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li>hello@company.com</li>
-                <li>+1 (555) 123-4567</li>
-                <li>123 Business St, City</li>
+                <li>soham171203@gmail.com</li>
+                <li>+91 8305384160</li>
+                <li>123 IT Park, Indore</li>
               </ul>
             </div>
 

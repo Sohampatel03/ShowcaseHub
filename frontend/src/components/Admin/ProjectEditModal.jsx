@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { HiX, HiCheckCircle } from 'react-icons/hi';
 import { updateProject } from "../../api/projectsApi";
 // import { updateClient } from "../../api/clientsApi";
