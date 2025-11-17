@@ -80,7 +80,7 @@ const AdminLogin = () => {
                 <input
                   type="email"
                   className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all outline-none"
-                  placeholder="admin@company.com"
+                  placeholder="soham171203@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -100,7 +100,7 @@ const AdminLogin = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   className="w-full pl-12 pr-12 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all outline-none"
-                  placeholder="Enter your password"
+                  placeholder="soham1712"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
