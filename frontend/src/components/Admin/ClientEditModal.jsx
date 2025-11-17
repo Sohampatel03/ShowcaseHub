@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { updateClient } from "../../api/clientsApi";
-import ImageCropUploader from "./ImageCropUploader";
 
 const ClientEditModal = ({ client, onClose, onSaved }) => {
   const [form, setForm] = useState({
@@ -8,7 +7,6 @@ const ClientEditModal = ({ client, onClose, onSaved }) => {
     designation: "",
     description: "",
   });
-  const [imageFile, setImageFile] = useState(null);
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -36,10 +34,7 @@ const ClientEditModal = ({ client, onClose, onSaved }) => {
     fd.append("name", form.name);
     fd.append("designation", form.designation);
     fd.append("description", form.description);
-
-    if (imageFile) {
-      fd.append("image", imageFile);
-    }
+    // ❌ no image append here
 
     setLoading(true);
     try {
@@ -109,6 +104,8 @@ const ClientEditModal = ({ client, onClose, onSaved }) => {
               required
             />
           </div>
+
+          {/* ✅ Only show current image, no cropper */}
           <div>
             <p className="text-xs text-gray-500 mb-1">
               Current Image:
@@ -116,14 +113,10 @@ const ClientEditModal = ({ client, onClose, onSaved }) => {
             <img
               src={client.imageUrl}
               alt={client.name}
-              className="w-24 h-24 object-cover rounded-full mb-3"
-            />
-            <ImageCropUploader
-              label="Change Image (optional) - Crop to 1:1"
-              aspect={1}
-              onCroppedFile={setImageFile}
+              className="w-24 h-24 object-cover rounded-full mb-3 border border-gray-200"
             />
           </div>
+
           <div className="flex items-center gap-3 mt-2">
             <button
               type="submit"

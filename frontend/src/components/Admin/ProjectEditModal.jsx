@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
-import { HiX, HiCheckCircle } from 'react-icons/hi';
+import { AnimatePresence, motion } from "framer-motion";
+import { HiX, HiCheckCircle } from "react-icons/hi";
 import { updateProject } from "../../api/projectsApi";
-// import { updateClient } from "../../api/clientsApi";
-import ImageCropUploader from "./ImageCropUploader";
 
-  const ProjectEditModal = ({ project, onClose, onSaved }) => {
+const ProjectEditModal = ({ project, onClose, onSaved }) => {
   const [form, setForm] = useState({ name: "", description: "" });
-  const [imageFile, setImageFile] = useState(null);
   const [msg, setMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,7 +29,7 @@ import ImageCropUploader from "./ImageCropUploader";
     const fd = new FormData();
     fd.append("name", form.name);
     fd.append("description", form.description);
-    if (imageFile) fd.append("image", imageFile);
+    // ❌ no image in edit
 
     setLoading(true);
     try {
@@ -97,17 +94,15 @@ import ImageCropUploader from "./ImageCropUploader";
               />
             </div>
 
+            {/* ✅ Only show current image, no uploader */}
             <div>
-              <p className="text-sm font-semibold text-gray-700 mb-2">Current Image</p>
+              <p className="text-sm font-semibold text-gray-700 mb-2">
+                Current Image
+              </p>
               <img
                 src={project.imageUrl}
                 alt={project.name}
-                className="w-full h-48 object-cover rounded-2xl mb-4"
-              />
-              <ImageCropUploader
-                label="Change Image (optional)"
-                aspect={9 / 7}
-                onCroppedFile={setImageFile}
+                className="w-full h-48 object-cover rounded-2xl mb-4 border border-gray-200"
               />
             </div>
 
@@ -117,8 +112,8 @@ import ImageCropUploader from "./ImageCropUploader";
                 animate={{ opacity: 1, y: 0 }}
                 className={`flex items-center gap-2 p-4 rounded-xl ${
                   success
-                    ? 'bg-green-50 text-green-700 border border-green-200'
-                    : 'bg-red-50 text-red-700 border border-red-200'
+                    ? "bg-green-50 text-green-700 border border-green-200"
+                    : "bg-red-50 text-red-700 border border-red-200"
                 }`}
               >
                 {success && <HiCheckCircle className="w-5 h-5" />}
