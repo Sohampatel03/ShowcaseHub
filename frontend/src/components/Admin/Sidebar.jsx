@@ -7,7 +7,7 @@ import {
   HiNewspaper,
   HiArrowRightOnRectangle,
   HiX,
-} from "react-icons/hi";
+} from "react-icons/hi2";
 
 const Sidebar = ({ activeTab, setActiveTab, isOpen, onClose }) => {
   const navigate = useNavigate();
