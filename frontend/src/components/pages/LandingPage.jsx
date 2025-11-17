@@ -134,13 +134,13 @@ const LandingPage = () => {
                     {link.name}
                   </a>
                 ))}
-                <a
-                  href="/admin/login"
+                <MotionLink
+  to="/admin/login"
                   className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium text-center"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Admin
-                </a>
+                </MotionLink>
               </div>
             </motion.nav>
           )}
