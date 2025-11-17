@@ -31,6 +31,8 @@ const AdminDashboard = () => {
 
   const [editingProject, setEditingProject] = useState(null);
   const [editingClient, setEditingClient] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
 
   const loadData = async () => {
     setLoading(true);
@@ -95,10 +97,22 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen flex bg-gray-50">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+       <Sidebar
+      activeTab={activeTab}
+      setActiveTab={setActiveTab}
+      isOpen={sidebarOpen}
+      onClose={() => setSidebarOpen(false)}
+    />
       
       <main className="flex-1 overflow-auto">
         <div className="p-6 md:p-8 max-w-7xl mx-auto">
+           {/* mobile hamburger */}
+        <button
+          className="mb-4 inline-flex items-center gap-2 md:hidden rounded-xl border px-3 py-2 text-sm"
+          onClick={() => setSidebarOpen(true)}
+        >
+          ☰ Menu
+        </button>
           {/* Header with Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
