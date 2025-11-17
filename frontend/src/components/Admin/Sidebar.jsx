@@ -7,7 +7,7 @@ import {
   HiNewspaper,
   HiArrowRightOnRectangle,
   HiX,
-} from "react-icons/hi2";
+} from "react-icons/hi";
 
 const Sidebar = ({ activeTab, setActiveTab, isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const Sidebar = ({ activeTab, setActiveTab, isOpen, onClose }) => {
             onClick={onClose}
             className="p-2 rounded-lg hover:bg-gray-100"
           >
-            <HiX className="w-5 h-5 text-gray-500" />
+             <span className="text-xl leading-none text-gray-500">&times;</span>
           </button>
         </div>
 
