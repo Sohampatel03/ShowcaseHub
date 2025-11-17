@@ -8,9 +8,11 @@ import ContactForm from "../Landing/ContactForm";
 import NewsletterSection from "../Landing/NewsletterSection";
 import { fetchProjects } from "../../api/projectsApi";
 import { fetchClients } from "../../api/clientsApi";
+import { Link } from "react-router-dom";
 import img from '../../assets/img1.png';
 
 const LandingPage = () => {
+  const MotionLink = motion(Link);
   const [projects, setProjects] = useState([]);
   const [clients, setClients] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -90,14 +92,14 @@ const LandingPage = () => {
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
                 </motion.a>
               ))}
-              <motion.a
-                href="/admin/login"
-                className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Admin
-              </motion.a>
+              <MotionLink
+  to="/admin/login"
+  className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all"
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+>
+  Admin
+</MotionLink>
             </nav>
 
             {/* Mobile menu button */}
