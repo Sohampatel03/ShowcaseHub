@@ -15,12 +15,30 @@ const contactRoutes = require('./routes/contactRoutes');
 const subscriberRoutes = require('./routes/subscriberRoutes');
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://showcase-hub-mauve.vercel.app", // your Vercel frontend
+];
 
 // Connect DB
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like Postman or server-to-server)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json());
 app.use(morgan('dev'));
 
